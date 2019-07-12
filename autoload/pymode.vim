@@ -100,18 +100,18 @@ fun! pymode#reload_buf_by_nr(nr) "{{{
 endfunction "}}}
 
 fun! pymode#buffer_pre_write() "{{{
-    let b:pymode_modified = &modified
+    let t:pymode_modified = &modified
 endfunction "}}}
 
 fun! pymode#buffer_post_write() "{{{
     if g:pymode_rope
-        if g:pymode_rope_regenerate_on_write && b:pymode_modified
+        if g:pymode_rope_regenerate_on_write && t:pymode_modified
             call pymode#debug('regenerate')
             call pymode#rope#regenerate()
         endif
     endif
     if g:pymode_lint
-        if g:pymode_lint_unmodified || (g:pymode_lint_on_write && b:pymode_modified)
+        if g:pymode_lint_unmodified || (g:pymode_lint_on_write && t:pymode_modified)
             call pymode#debug('check code')
             call pymode#lint#check()
         endif
